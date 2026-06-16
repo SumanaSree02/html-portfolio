@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="emp.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Employee Management System</h1>
+        <p>Manage employee records easily and professionally</p>
+    </div>
+
+    <div class="stats">
+        <div class="card">
+            <h3 id="totalEmployees">0</h3>
+            <p>Total Employees</p>
+        </div>
+        <div class="card">
+            <h3 id="avgSalary">0</h3>
+            <p>Average Salary</p>
+        </div>
+        <div class="card">
+            <h3 id="highestSalary">0</h3>
+            <p>Highest Salary</p>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <input type="text" id="empName" placeholder="Employee Name">
+        <input type="number" id="empAge" placeholder="Age">
+
+        <select id="empDepartment">
+            <option value="">Select Department</option>
+            <option>HR</option>
+            <option>IT</option>
+            <option>Finance</option>
+            <option>Marketing</option>
+        </select>
+
+        <input type="number" id="empSalary" placeholder="Salary">
+
+        <button id="addBtn" onclick="addEmployee()">Add Employee</button>
+        <button class="clear-btn" onclick="clearForm()">Clear</button>
+    </div>
+
+    <div class="tools">
+        <input type="text" id="search" placeholder="Search by name..." onkeyup="displayEmployees()">
+
+        <select id="filterDepartment" onchange="displayEmployees()">
+            <option value="">All Departments</option>
+            <option>HR</option>
+            <option>IT</option>
+            <option>Finance</option>
+            <option>Marketing</option>
+        </select>
+
+        <select id="sortSalary" onchange="displayEmployees()">
+            <option value="">Sort Salary</option>
+            <option value="low">Low to High</option>
+            <option value="high">High to Low</option>
+        </select>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody id="employeeTable"></tbody>
+    </table>
+
+</div>
+
+<script src="emp.js"></script>
+
+</body>
+</html>

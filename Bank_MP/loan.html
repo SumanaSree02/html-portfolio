@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loan Approval System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+body{
+    height:100vh;
+    background:radial-gradient(circle at top,#1d4ed8,#020617);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:950px;
+    height:560px;
+    background:white;
+    border-radius:25px;
+    display:flex;
+    overflow:hidden;
+    box-shadow:0 25px 60px rgba(0,0,0,.5);
+}
+
+.info{
+    width:40%;
+    background:linear-gradient(160deg,#1e3a8a,#0f172a);
+    color:white;
+    padding:45px;
+}
+
+.info h1{
+    font-size:34px;
+    margin-bottom:20px;
+}
+
+.info p{
+    color:#cbd5e1;
+    line-height:1.6;
+}
+
+.icon{
+    font-size:90px;
+    margin:40px 0;
+}
+
+.rules{
+    background:rgba(255,255,255,.12);
+    padding:20px;
+    border-radius:18px;
+}
+
+.rules li{
+    margin:8px 0;
+}
+
+.form{
+    width:60%;
+    padding:35px 45px;
+}
+
+.form h2{
+    text-align:center;
+    color:#1e3a8a;
+    margin-bottom:20px;
+}
+
+.row{
+    display:flex;
+    gap:20px;
+}
+
+.field{
+    width:50%;
+    margin-bottom:12px;
+}
+
+label{
+    font-size:14px;
+    font-weight:600;
+    color:#334155;
+}
+
+input,select{
+    width:100%;
+    padding:11px;
+    margin-top:5px;
+    border-radius:10px;
+    border:1px solid #cbd5e1;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border:2px solid #2563eb;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#result{
+    margin-top:15px;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none;
+}
+
+@media(max-width:850px){
+    .container{
+        width:95%;
+        height:auto;
+        flex-direction:column;
+    }
+
+    .info,.form{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="info">
+    <h1>🏦 Smart Bank</h1>
+
+    <p>
+        Welcome to Smart Loan Approval Portal.
+        Our system checks applicant details and automatically decides loan eligibility.
+    </p>
+
+    <div class="icon">💳</div>
+
+    <div class="rules">
+        <h3>Loan Rules</h3>
+        <ul>
+            <li>Age must be 21+</li>
+            <li>Employee salary ≥ ₹25,000</li>
+            <li>Employee CIBIL Score ≥ 650</li>
+            <li>Student CGPA ≥ 7</li>
+            <li>Student loan limit ≤ ₹5,00,000</li>
+        </ul>
+    </div>
+</div>
+
+<div class="form">
+
+<h2>Loan Application Form</h2>
+
+<form id="loanForm">
+
+    <div class="row">
+        <div class="field">
+            <label>Name</label>
+            <input id="name" required>
+        </div>
+
+        <div class="field">
+            <label>Applicant Type</label>
+            <select id="type" required>
+                <option value="">Select Type</option>
+                <option value="employee">Employee</option>
+                <option value="student">Student</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="commonFields" class="hidden">
+        <label>Age</label>
+        <input type="number" id="age">
+    </div>
+
+    <div id="employeeFields" class="hidden">
+        <div class="row">
+            <div class="field">
+                <label>Monthly Salary</label>
+                <input type="number" id="salary">
+            </div>
+
+            <div class="field">
+                <label>CIBIL Score</label>
+                <input type="number" id="cibil">
+            </div>
+        </div>
+
+        <label>Loan Amount Required</label>
+        <input type="number" id="empLoan">
+    </div>
+
+    <div id="studentFields" class="hidden">
+        <div class="row">
+            <div class="field">
+                <label>CGPA</label>
+                <input type="number" step="0.1" id="cgpa">
+            </div>
+
+            <div class="field">
+                <label>Loan Amount Required</label>
+                <input type="number" id="studentLoan">
+            </div>
+        </div>
+    </div>
+
+    <button>Check Loan Eligibility</button>
+
+</form>
+
+<div id="result"></div>
+
+</div>
+</div>
+
+<script>
+let type = document.getElementById("type");
+
+type.addEventListener("change", function(){
+
+    let selectedType = type.value;
+
+    document.getElementById("result").innerHTML = "";
+
+    document.getElementById("commonFields").classList.add("hidden");
+    document.getElementById("employeeFields").classList.add("hidden");
+    document.getElementById("studentFields").classList.add("hidden");
+
+    if(selectedType == "employee"){
+        document.getElementById("commonFields").classList.remove("hidden");
+        document.getElementById("employeeFields").classList.remove("hidden");
+    }
+
+    else if(selectedType == "student"){
+        document.getElementById("commonFields").classList.remove("hidden");
+        document.getElementById("studentFields").classList.remove("hidden");
+    }
+
+});
+
+document.getElementById("loanForm").addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    let name = document.getElementById("name").value;
+    let type = document.getElementById("type").value;
+    let age = Number(document.getElementById("age").value);
+
+    let approve = false;
+    let loanAmount = 0;
+
+    if(type == ""){
+        alert("Please select applicant type");
+        return;
+    }
+
+    if(type == "employee"){
+
+        let salary = Number(document.getElementById("salary").value);
+        let cibil = Number(document.getElementById("cibil").value);
+        loanAmount = Number(document.getElementById("empLoan").value);
+
+        if(age >= 21 && salary >= 25000 && cibil >= 650 && loanAmount <= salary * 12 * 5){
+            approve = true;
+        }
+    }
+
+    else if(type == "student"){
+
+        let cgpa = Number(document.getElementById("cgpa").value);
+        loanAmount = Number(document.getElementById("studentLoan").value);
+
+        if(age >= 21 && cgpa >= 7 && loanAmount <= 500000){
+            approve = true;
+        }
+    }
+
+    let result = document.getElementById("result");
+
+    if(approve){
+        result.innerHTML =
+        "✅ LOAN SANCTIONED <br>" +
+        "Applicant : " + name + "<br>" +
+        "Amount : ₹" + loanAmount;
+
+        result.style.background = "#dcfce7";
+        result.style.color = "green";
+    }
+
+    else{
+        result.innerHTML =
+        "❌ LOAN REJECTED <br>" +
+        "Criteria Not Matched";
+
+        result.style.background = "#fee2e2";
+        result.style.color = "red";
+    }
+
+});
+</script>
+
+</body>
+</html>
