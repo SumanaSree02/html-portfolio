@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Library Management System</h1>
+
+    <div class="form-box">
+        <input type="text" id="bookName" placeholder="Book Name">
+        <input type="text" id="authorName" placeholder="Author Name">
+
+        <select id="category">
+            <option value="">Select Category</option>
+            <option>Programming</option>
+            <option>Science</option>
+            <option>Mathematics</option>
+            <option>History</option>
+            <option>Fiction</option>
+        </select>
+
+        <input type="number" id="price" placeholder="Price">
+        <input type="number" id="quantity" placeholder="Quantity">
+
+        <button onclick="addBook()">Add Book</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="bookTable"></tbody>
+    </table>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
